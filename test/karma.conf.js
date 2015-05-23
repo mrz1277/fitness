@@ -45,6 +45,11 @@ module.exports = function(config) {
       '../bower_components/angular-translate-loader-url/angular-translate-loader-url.js',
       '../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
       '../bower_components/angular-resource/angular-resource.js',
+      '../bower_components/cal-heatmap/cal-heatmap.js',
+      '../bower_components/angular-cal-heatmap-directive/app/scripts/calHeatmap.js',
+      '../bower_components/moment/moment.js',
+      '../bower_components/angular-moment/angular-moment.js',
+      '../bower_components/requirejs/require.js',
       // endbower
       '../app/scripts/**/*.js',
       //'../test/mock/**/*.js',

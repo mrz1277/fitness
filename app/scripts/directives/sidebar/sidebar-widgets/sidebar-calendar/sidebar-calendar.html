@@ -1,3 +1,21 @@
 <div class="calendar-container text-center" ng-controller="calendarCtrl">
-	<div ui-calendar ng-model="eventSources"></div>
+	<!--<div ui-calendar ng-model="eventSources"></div>-->
+  <div class="">
+    <button>&lt;</button>
+    <button>&gt;</button>
+  </div>
+  <cal-heatmap config="{
+  domain: 'month',
+  subDomain: 'x_day',
+  cellSize: 25,
+  cellPadding: 5,
+  range: 1,
+  label: {
+    position: 'top'
+  },
+  weekStartOnMonday: false,
+  displayLegend: false,
+  legend: [0, 1],
+  domainLabelFormat: '%b'
+  }"></cal-heatmap>
 </div>

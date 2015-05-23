@@ -23,7 +23,9 @@ angular
     'angular-loading-bar',
     'angular-progress-button-styles',
     'pascalprecht.translate',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'angularMoment',
+    'calHeatmap'
   ])
   .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.latencyThreshold = 5;
