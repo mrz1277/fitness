@@ -49,7 +49,6 @@ module.exports = function(config) {
       '../bower_components/angular-cal-heatmap-directive/app/scripts/calHeatmap.js',
       '../bower_components/moment/moment.js',
       '../bower_components/angular-moment/angular-moment.js',
-      '../bower_components/requirejs/require.js',
       // endbower
       '../app/scripts/**/*.js',
       //'../test/mock/**/*.js',
