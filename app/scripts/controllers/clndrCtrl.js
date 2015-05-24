@@ -12,7 +12,6 @@ angular.module('AniTheme').controller('calendarCtrl', function ($scope, moment, 
   amMoment.changeLocale('ko');
 
   $scope.config = {
-    start: new Date(2015, 6, 1),
     domain: 'month',
     subDomain: 'x_day',
     cellSize: 25,
@@ -30,9 +29,30 @@ angular.module('AniTheme').controller('calendarCtrl', function ($scope, moment, 
     domainLabelFormat: function(date) {
       return new moment(date).format('YYYY년 MMM');
     },
+    subDomainTextFormat: function(date) {
+      return new moment(date).format('D');
+    },
     highlight: 'now',
     previousSelector: '#cal-previous',
-    nextSelector: '#cal-next'
+    nextSelector: '#cal-next',
+    data: '/api/cal',
+    afterLoadData: function(data) {
+      var calData = {};
+      data.forEach(function(d) {
+        calData[moment(d).format('X')] = 1;
+      });
+      return calData;
+    },
+    onClick: function(date, value) {
+      //check value
+      //update
+      //toggle color
+      if (value) {
+
+      } else {
+
+      }
+    }
   };
 
 });

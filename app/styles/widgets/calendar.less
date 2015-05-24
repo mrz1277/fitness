@@ -1,4 +1,5 @@
 div.calendar-container {
+	// full-calendar
 	.fc {
 		* {
 		border: none !important;
@@ -58,8 +59,25 @@ div.calendar-container {
 	.fc-day-header {
 		font-size: 10px;
 	}
+
+	// cal-heatmap
     .graph-label {
         fill: rgba(255, 255, 255, 0.8);
         font-size: 12px;
     }
+	.subdomain-text {
+		font-size: 12px;
+		fill: rgba(255,255,255,.8);
+	}
+	.graph-rect {
+		fill: transparent;
+		&.q1, &.q2, &.q3, &.q4 {
+			fill: #2089c9;
+		}
+	}
+	.graph-subdomain-group rect:hover
+	{
+		stroke: #000;
+		stroke-width: 0px
+	}
 }
