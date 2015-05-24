@@ -28,4 +28,11 @@ router.get('/news', function(req, res) {
   });
 });
 
+router.get('/profile', function(req, res) {
+  res.json({
+    name: '구재성',
+    image: '/images/flat-avatar.png'
+  })
+});
+
 module.exports = router;
