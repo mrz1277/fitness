@@ -52,5 +52,11 @@ angular.module('AniTheme').controller('ChartCtrl', ['$scope', '$timeout', functi
                         {"id":"top-2","type":"spline"}];
     $scope.datax={"id":"x"};
 
-    
+		$scope.pieDistance = {
+			size: 220,
+			onStep: function(from, to, percent) {
+				$scope.percent = Math.round(percent);
+			}
+		}
+
 }]);

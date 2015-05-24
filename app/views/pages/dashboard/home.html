@@ -1,5 +1,22 @@
 
-<div class="conter-wrapper home-container">
+<div class="conter-wrapper home-container" ng-controller="ChartCtrl">
+	<div class="row home-row text-center">
+		<div class="col-md-4">
+			<div easypiechart options="pieDistance" percent="74" class="pie">
+				<span class="percent">{{percent}}</span>
+			</div>
+		</div>
+		<div class="col-md-4 text-center">
+			<div easypiechart options="pieDistance" percent="34" class="pie">
+				<span class="percent">{{percent}}</span>
+			</div>
+		</div>
+		<div class="col-md-4 text-center">
+			<div easypiechart options="pieDistance" percent="64" class="pie">
+				<span class="percent">{{percent}}</span>
+			</div>
+		</div>
+	</div>
 	<div class="row home-row">
 		<div class="col-md-4 col-lg-3">
 			<div class="home-stats">

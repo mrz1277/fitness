@@ -25,7 +25,8 @@ angular
     'pascalprecht.translate',
     'ui.bootstrap',
     'angularMoment',
-    'calHeatmap'
+    'calHeatmap',
+    'easypiechart'
   ])
   .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.latencyThreshold = 5;

@@ -1,0 +1,25 @@
+.pie {
+    position: relative;
+    display: inline-block;
+    width: 220px;
+    height: 220px;
+    text-align: center;
+
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.percent {
+    display: inline-block;
+    line-height: 220px;
+    z-index: 2;
+
+    &:after {
+        content: '%';
+        margin-left: 0.1em;
+        font-size: .8em;
+    }
+}
