@@ -17,8 +17,11 @@ angular.module('AniTheme').controller('ChartCtrl', ['$scope', '$timeout', functi
 	    colours: ['#3CA2E0','#F0AD4E','#7AB67B','#D9534F','#3faae3'],
 	    onClick: function (points, evt) {
 	      console.log(points, evt);
-	    }
-
+	    },
+			options: {
+				responsive: true,
+				maintainAspectRatio: false
+			}
     };
 
     $scope.bar = {
@@ -54,6 +57,7 @@ angular.module('AniTheme').controller('ChartCtrl', ['$scope', '$timeout', functi
 
 		$scope.pieDistance = {
 			size: 220,
+			lineWidth: 10,
 			onStep: function(from, to, percent) {
 				$scope.percent = Math.round(percent);
 			}

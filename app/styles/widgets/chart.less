@@ -18,8 +18,19 @@
     z-index: 2;
 
     &:after {
-        content: '%';
         margin-left: 0.1em;
         font-size: .8em;
     }
+}
+
+.percent-time:after {
+    content: '분';
+}
+
+.percent-distance:after {
+    content: 'km';
+}
+
+.percent-cal:after {
+    content: '칼로리';
 }
