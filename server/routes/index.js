@@ -35,4 +35,15 @@ router.get('/profile', function(req, res) {
   })
 });
 
+router.get('/today', function(req, res) {
+  res.json({
+    time: 50,
+    timeBase: 60,
+    distance: 4,
+    distanceBase: 5,
+    calories: 1000,
+    caloriesBase: 1500
+  });
+});
+
 module.exports = router;

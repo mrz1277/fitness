@@ -3,22 +3,22 @@
 	<div class="row home-row text-center">
 		<div class="col-md-4">
 			<div class="pie-container">
-				<div easypiechart options="pieDistance" percent="50" class="pie">
-					<span class="percent percent-time">{{percent}}</span>
+				<div easypiechart options="pieTimeOptions" percent="pie.time / pie.timeBase * 100" class="pie">
+					<span class="percent percent-time">{{time}}</span>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="pie-container">
-				<div easypiechart options="pieDistance" percent="4" class="pie">
-					<span class="percent percent-distance">{{percent}}</span>
+				<div easypiechart options="pieDistanceOptions" percent="pie.distance / pie.distanceBase * 100" class="pie">
+					<span class="percent percent-distance">{{distance}}</span>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="pie-container">
-				<div easypiechart options="pieDistance" percent="1000" class="pie">
-					<span class="percent percent-cal">{{percent}}</span>
+				<div easypiechart options="pieCaloriesOptions" percent="pie.calories / pie.caloriesBase * 100" class="pie">
+					<span class="percent percent-cal">{{calories}}</span>
 				</div>
 			</div>
 		</div>
