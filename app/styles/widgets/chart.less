@@ -10,27 +10,60 @@
         top: 0;
         left: 0;
     }
-}
 
-.percent {
-    display: inline-block;
-    line-height: 220px;
-    z-index: 2;
-
-    &:after {
-        margin-left: 0.1em;
-        font-size: .8em;
+    .pie-content {
+        display: table-cell;
+        height: 220px;
+        width: 220px;
+        vertical-align: middle;
+        text-align: center;
+        z-index: 2;
     }
-}
 
-.percent-time:after {
-    content: '분';
-}
+    .percent {
+//        display: inline-block;
+//        line-height: 220px;
+//        z-index: 2;
+        font-size: 2em;
+        font-weight: bold;
 
-.percent-distance:after {
-    content: 'km';
-}
+        &:after {
+            margin-left: 0.1em;
+            font-size: .8em;
+        }
+    }
+    .percent-time:after {
+        content: '분';
+    }
+    .percent-distance:after {
+        content: 'km';
+    }
+    .percent-cal:after {
+        content: '칼로리';
+    }
 
-.percent-cal:after {
-    content: '칼로리';
+    .base {
+//        display: inline-block;
+//        line-height: 200px;
+//        z-index: 2;
+        font-size: .8em;
+
+        &:before {
+            margin-right: 0.1em;
+            content: '평균';
+        }
+        &:after {
+            margin-left: 0.1em;
+        }
+    }
+
+    .base-time:after {
+        content: '분';
+    }
+    .base-distance:after {
+        content: 'km';
+    }
+    .base-cal:after {
+        content: '칼로리';
+    }
 }

@@ -56,27 +56,14 @@ angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $ht
   $scope.datax={"id":"x"};
 
   // pieOptions
-  var pieDefaultOptions = {
+  $scope.pieOptions = {
     size: 220,
-    lineWidth: 10
+    lineWidth: 10,
+    scaleColor: false,
+    barColor: '#3ca2e0'
   };
 
-  $scope.pieDistanceOptions = lodash.defaults({
-    onStep: function(from, to, percent) {
-      $scope.distance = Math.round(percent * $scope.pie.distanceBase / 100);
-    }
-  }, pieDefaultOptions);
-  $scope.pieTimeOptions = lodash.defaults({
-    onStep: function(from, to, percent) {
-      $scope.time = Math.round(percent * $scope.pie.timeBase / 100);
-    }
-  }, pieDefaultOptions);
-  $scope.pieCaloriesOptions = lodash.defaults({
-    onStep: function(from, to, percent) {
-      $scope.calories = Math.round(percent * $scope.pie.caloriesBase / 100);
-    }
-  }, pieDefaultOptions);
-
+  // default
   $scope.pie = {
     time: 0,
     timeBase: 1,
@@ -85,8 +72,9 @@ angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $ht
     calories: 0,
     caloriesBase: 1
   };
+
   $http.get('/api/today').success(function(results) {
-    $scope.pie = results;
+    !lodash.isEmpty(results) && ($scope.pie = results);
   });
 
 });

@@ -3,22 +3,31 @@
 	<div class="row home-row text-center">
 		<div class="col-md-4">
 			<div class="pie-container">
-				<div easypiechart options="pieTimeOptions" percent="pie.time / pie.timeBase * 100" class="pie">
-					<span class="percent percent-time">{{time}}</span>
+				<div easypiechart options="pieOptions" percent="pie.time / pie.timeBase * 100" class="pie">
+          <div class="pie-content">
+            <div class="percent percent-time" ng-bind="pie.time"></div>
+            <div class="base base-time" ng-bind="pie.timeBase"></div>
+          </div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="pie-container">
-				<div easypiechart options="pieDistanceOptions" percent="pie.distance / pie.distanceBase * 100" class="pie">
-					<span class="percent percent-distance">{{distance}}</span>
+				<div easypiechart options="pieOptions" percent="pie.distance / pie.distanceBase * 100" class="pie">
+          <div class="pie-content">
+            <div class="percent percent-distance" ng-bind="pie.distance"></div>
+            <div class="base base-distance" ng-bind="pie.distanceBase"></div>
+          </div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="pie-container">
-				<div easypiechart options="pieCaloriesOptions" percent="pie.calories / pie.caloriesBase * 100" class="pie">
-					<span class="percent percent-cal">{{calories}}</span>
+				<div easypiechart options="pieOptions" percent="pie.calories / pie.caloriesBase * 100" class="pie">
+          <div class="pie-content">
+            <div class="percent percent-cal" ng-bind="pie.calories"></div>
+            <div class="base base-cal" ng-bind="pie.caloriesBase"></div>
+          </div>
 				</div>
 			</div>
 		</div>
