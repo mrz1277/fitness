@@ -27,7 +27,8 @@ angular
     'angularMoment',
     'calHeatmap',
     'easypiechart',
-    'ngLodash'
+    'ngLodash',
+    'angular-custom-select'
   ])
   .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.latencyThreshold = 5;

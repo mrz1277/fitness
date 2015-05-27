@@ -46,4 +46,26 @@ router.get('/today', function(req, res) {
   });
 });
 
+router.get('/activities', function(req, res) {
+  res.json({
+    activities: [
+      {
+        name: 'Walking / Running'
+      },
+      {
+        name: 'Biking'
+      },
+      {
+        name: 'Aerobics'
+      },
+      {
+        name: 'Yoga'
+      },
+      {
+        name: 'Weight Training'
+      }
+    ]
+  });
+});
+
 module.exports = router;

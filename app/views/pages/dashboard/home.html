@@ -35,15 +35,47 @@
 	<div class="row home-row">
 		<div class="col-md-8">
 			<div class="home-charts-middle">
-				<div id="line-chart" ng-controller="ChartCtrl">
+				<div id="line-chart">
 					<canvas id="line" class="chart chart-line chart-xl" data="line.data" labels="line.labels" click="line.onClick" series="line.series" colours="line.colours" options="line.options"></canvas>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="home-charts-right">
-
-			</div>
+			<div class="home-charts-right" ng-controller="AddActivityCtrl">
+        <h2>{{ 'add_activity' | translate }}</h2>
+        <div class="activity-selector">
+          <custom-select
+            ng-model="selectedActivities.name"
+            ng-options="name as activity.name for activity in activities || []"
+            placeholder="{{ 'select_activity' | translate }}">
+          </custom-select>
+        </div>
+        <div class="date-picker">
+          <input type="text"
+                 class="form-control"
+                 datepicker-popup="{{format}}"
+                 ng-model="dt"
+                 is-open="opened"
+                 min-date="minDate"
+                 max-date="'2015-06-22'"
+                 datepicker-options="dateOptions"
+                 date-disabled="disabled(date, mode)"
+                 ng-required="true"
+                 close-text="Close"
+                 ng-click="open($event)"/>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <input type="text" class="col-md-4">분
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <input type="text" class="col-md-4">km
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <input type="text" class="col-md-4">칼로리
+          </div>
+        </div>
+      </div>
 		</div>
 	</div>
 </div>

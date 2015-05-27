@@ -51,6 +51,7 @@ module.exports = function(config) {
       '../bower_components/angular-moment/angular-moment.js',
       '../bower_components/angularport.easy-pie-chart/dist/angular.easypiechart.js',
       '../bower_components/ng-lodash/build/ng-lodash.js',
+      '../bower_components/angular-custom-select/dist/angular-custom-select.min.js',
       // endbower
       '../app/scripts/**/*.js',
       //'../test/mock/**/*.js',
