@@ -5,8 +5,15 @@
 			<div class="pie-container">
 				<div easypiechart options="pieOptions" percent="pie.time / pie.timeBase * 100" class="pie">
           <div class="pie-content">
-            <div class="percent percent-time" ng-bind="pie.time"></div>
-            <div class="base base-time" ng-bind="pie.timeBase"></div>
+            <div>
+              <span class="percent" ng-bind="pie.time"></span>
+              <span class="percent after">{{'min' | translate}}</span>
+            </div>
+            <div>
+              <span class="base before">{{'average' | translate}}</span>
+              <span class="base" ng-bind="pie.timeBase"></span>
+              <span class="base after">{{'min' | translate}}</span>
+            </div>
           </div>
 				</div>
 			</div>
@@ -15,8 +22,15 @@
 			<div class="pie-container">
 				<div easypiechart options="pieOptions" percent="pie.distance / pie.distanceBase * 100" class="pie">
           <div class="pie-content">
-            <div class="percent percent-distance" ng-bind="pie.distance"></div>
-            <div class="base base-distance" ng-bind="pie.distanceBase"></div>
+            <div>
+              <span class="percent" ng-bind="pie.distance"></span>
+              <span class="percent after">{{'km' | translate}}</span>
+            </div>
+            <div>
+              <span class="base before">{{'average' | translate}}</span>
+              <span class="base" ng-bind="pie.distanceBase"></span>
+              <span class="base after">{{'km' | translate}}</span>
+            </div>
           </div>
 				</div>
 			</div>
@@ -25,57 +39,82 @@
 			<div class="pie-container">
 				<div easypiechart options="pieOptions" percent="pie.calories / pie.caloriesBase * 100" class="pie">
           <div class="pie-content">
-            <div class="percent percent-cal" ng-bind="pie.calories"></div>
-            <div class="base base-cal" ng-bind="pie.caloriesBase"></div>
+            <div>
+              <span class="percent" ng-bind="pie.calories"></span>
+              <span class="percent after">{{'cal' | translate}}</span>
+            </div>
+            <div>
+              <span class="base before">{{'average' | translate}}</span>
+              <span class="base" ng-bind="pie.caloriesBase"></span>
+              <span class="base after">{{'cal' | translate}}</span>
+            </div>
           </div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="row home-row">
+    <div class="col-md-4">
+      <div class="home-charts-right" ng-controller="AddActivityCtrl">
+        <h2>{{ 'add_activity' | translate }}</h2>
+        <div class="activity-selector">
+          <custom-select
+            ng-model="selectedActivities.activity"
+            ng-options="activity for activity in activities"
+            placeholder="{{ 'select_activity' | translate }}">
+          </custom-select>
+        </div>
+        <div class="datetime-picker row">
+          <div class="col-xs-6 date-picker">
+            <input type="date"
+                   class="form-control"
+                   datepicker-popup="yyyy-MM-dd"
+                   ng-model="dt"
+                   is-open="opened"
+                   datepicker-options="dateOptions"
+                   ng-required="true"
+                   close-text="{{'close' | translate}}"
+                   current-text="{{'current' | translate}}"
+                   clear-text="{{'clear' | translate}}"
+                   ng-click="open($event)" />
+          </div>
+          <div class="col-xs-6 time-picker">
+            <timepicker ng-model="time"
+                        ng-change="changed()"
+                        minute-step="5"></timepicker>
+          </div>
+        </div>
+        <div class="activity-data row">
+          <div class="col-sm-6">
+            <input type="text" class="col-md-4">{{ 'min' | translate }}
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="col-md-4">{{ 'km' | translate }}
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="col-md-4">{{ 'calories' | translate }}
+          </div>
+        </div>
+        <button class="btn btn-block btn-default">{{'add' | translate}}</button>
+      </div>
+    </div>
 		<div class="col-md-8">
 			<div class="home-charts-middle">
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-default">{{'day' | translate}}</button>
+              <button type="button" class="btn btn-default">{{'month' | translate}}</button>
+            </div>
+          </div>
+          <div class="col-xs-6">
+
+          </div>
+        </div>
 				<div id="line-chart">
 					<canvas id="line" class="chart chart-line chart-xl" data="line.data" labels="line.labels" click="line.onClick" series="line.series" colours="line.colours" options="line.options"></canvas>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="home-charts-right" ng-controller="AddActivityCtrl">
-        <h2>{{ 'add_activity' | translate }}</h2>
-        <div class="activity-selector">
-          <custom-select
-            ng-model="selectedActivities.name"
-            ng-options="name as activity.name for activity in activities || []"
-            placeholder="{{ 'select_activity' | translate }}">
-          </custom-select>
-        </div>
-        <div class="date-picker">
-          <input type="text"
-                 class="form-control"
-                 datepicker-popup="{{format}}"
-                 ng-model="dt"
-                 is-open="opened"
-                 min-date="minDate"
-                 max-date="'2015-06-22'"
-                 datepicker-options="dateOptions"
-                 date-disabled="disabled(date, mode)"
-                 ng-required="true"
-                 close-text="Close"
-                 ng-click="open($event)"/>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-sm-12">
-            <input type="text" class="col-md-4">분
-          </div>
-          <div class="col-md-4 col-sm-12">
-            <input type="text" class="col-md-4">km
-          </div>
-          <div class="col-md-4 col-sm-12">
-            <input type="text" class="col-md-4">칼로리
-          </div>
-        </div>
-      </div>
 		</div>
 	</div>
 </div>

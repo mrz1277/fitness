@@ -16,103 +16,26 @@
 @light-grey: #e8e8e8;
 @very-light-grey: #f4f4f4;
 
-@blue: #0abaee;
+@blue: @brand-primary;
 
 @pink: #ea1f4a;
 
 @white: #ffffff;
 
 /* Dimensions */
-@custom-select-option-height: 50px;
+@custom-select-option-height: 35px;
 
-
-/*****************************************************************/
-/* Example Page */
-/*****************************************************************/
-
-body {
-    background-color: @white;
-    color: @black;
-    font-family: 'Lato', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    margin: 20px;
-    opacity: 0;
-    padding: 0;
-    transition: opacity 0.25s ease-out 0s;
-}
-
-body.initialized {
-    opacity: 1;
-}
-
-#wrapper {
-    margin: auto;
-    min-width: 280px;
-    position: relative;
-    width: 67%;
-}
-
-section {
-    border-bottom: 1px solid @light-grey;
-    margin-top: 32px;
-    padding-bottom: 32px;
-    &:first-of-type {
-        border-top: 1px solid @light-grey;
-        margin-top: 0;
-        padding-top: 32px;
-    }
-}
-
-h1 {
-    color: @pink;
-    font-size: 30px;
-}
-
-.view-on-github {
-    color: @blue;
-    display: block;
-    float: right;
-    margin: 12px 0 0 12px;
-    text-decoration: none;
-}
-
-h2 {
-    margin: 0 auto 12px;
-}
-
-.selected-value {
-    margin-top: @custom-select-option-height + 24px;
-}
-
-.gist {
-    margin-top: 28px;
-}
-
-@media screen and (max-width: 400px) {
-    h1 {
-        margin-top: 10px;
-    }
-    .view-on-github {
-        float: none;
-        margin: 0;
-    }
-}
 
 /*****************************************************************/
 /* Custom Select */
 /*****************************************************************/
 
 .custom-select {
-
     border: 1px solid @blue;
     box-shadow: 0px 0px 2px 0px @grey;
-    font-size: 18px;
-    left: 0;
+    font-size: 16px;
     max-height: @custom-select-option-height - 1px;
     overflow: hidden;
-    position: absolute;
-    right: 0;
     transform: translate3d(0,0,0); // enable hardware acceleration
     transition: max-height 0.23s linear 0s;
 
@@ -160,7 +83,7 @@ h2 {
     }
 
     @media screen and (max-width: 400px) {
-        font-size: 16px;
+        font-size: 14px;
         .option:hover {
             background-color: @white;
         }

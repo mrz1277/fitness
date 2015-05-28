@@ -18,13 +18,32 @@
 		.chart-container {
 			height: 255px;
 		}
+        .row {
+            margin-bottom: 5px;
+        }
 	}
 
 	.home-charts-right {
 		.box;
-		min-height: 285px;
+		min-height: 310px;
         h2 {
             margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        &>div {
+            margin-bottom: 20px;
+        }
+
+        .activity-data {
+            input {
+                border:0;
+                border-bottom:solid 1px #ccc;
+                outline:none;
+                margin-bottom: 10px;
+                width:60%;
+                text-align: center;
+            }
         }
 	}
 }
@@ -34,7 +53,6 @@
 	border: solid 1px @border-color;
 	padding: 15px;
 }
-
 
 @media (max-width: 767px) {
 	.home-row {

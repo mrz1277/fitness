@@ -46,10 +46,18 @@
   "repeatpass": "비밀번호 재입력",
   "user_number": "회원번호",
   "add_activity": "운동 추가하기",
-  "select_activity": "운동을 선택하세요...",
+  "select_activity": "▼ 운동을 선택하세요...",
   "Walking / Running": "걷기 / 달리기",
   "Biking": "사이클링",
   "Aerobics": "에어로빅",
   "Yoga": "요가",
-  "Weight Training": "웨이트 트레이닝"
+  "Weight Training": "웨이트 트레이닝",
+  "close": "닫기",
+  "current": "오늘",
+  "clear": "초기화",
+  "min" : "분",
+  "calories": "칼로리",
+  "average": "평균",
+  "day": "일",
+  "month": "월"
 }
