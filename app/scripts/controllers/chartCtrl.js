@@ -7,53 +7,93 @@
  * # MainCtrl
  * Controller of AniTheme
  */
-angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $http) {
-  $scope.line = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    data: [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-    ],
-    colours: ['#3CA2E0','#F0AD4E','#7AB67B','#D9534F','#3faae3'],
-    onClick: function (points, evt) {
-      console.log(points, evt);
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false
-    }
+angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $http, $translate, $q, moment, $interval) {
+  $scope.activityChart = {
+    data: [],
+    columns: [],
+    x: {id: 'x'}
   };
 
-  $scope.bar = {
-    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-    data: [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-    ],
-    colours: ['#3CA2E0','#F0AD4E','#7AB67B','#D9534F','#3faae3']
+  var colors = ['#3CA2E0','#F0AD4E','#7AB67B','#D9534F','#3faae3'];
+  var timeData = [], distanceData = [], caloryData = [];
 
-  };
+  // columns
+  function getActivities() {
+    var deferred = $q.defer();
 
-  $scope.donut = {
-    labels: ["Download Sales", "In-Store Sales", "Mail-Order Sales"],
-    data: [300, 500, 100],
-    colours: ['#3CA2E0','#F0AD4E','#7AB67B','#D9534F','#3faae3']
-  };
+    $http.get('/api/activities').success(function(result) {
+      var activityCount = result.activities.length;
 
-  $scope.pie = {
-    labels : ["Download Sales", "In-Store Sales", "Mail-Order Sales"],
-    data : [300, 500, 100],
-    colours: ['#3CA2E0','#F0AD4E','#7AB67B','#D9534F','#3faae3']
-  };
+      lodash.forEach(result.activities, function(activity, i) {
+        $translate(activity.name).then(function(translatedName) {
+          $scope.activityChart.columns.push({
+            "id":'activity-' + i,
+            "type":"bar",
+            "name":translatedName,
+            "color":colors[i]
+          });
 
+          $scope.activityChart.columns.length == activityCount && deferred.resolve(activityCount);
+        });
+      });
+    }).error(function(err) {
+      deferred.reject(err);
+    });
 
-  $scope.datapoints=[{"x":10,"top-1":10,"top-2":15},
-    {"x":20,"top-1":100,"top-2":35},
-    {"x":30,"top-1":15,"top-2":75},
-    {"x":40,"top-1":50,"top-2":45}];
-  $scope.datacolumns=[{"id":"top-1","type":"spline"},
-    {"id":"top-2","type":"spline"}];
-  $scope.datax={"id":"x"};
+    return deferred.promise;
+  }
+
+  function getData(activityCount) {
+    $http.get('/api/data').success(function(data) {
+      var dates = Object.keys(data);
+
+      if (dates.length > 0) {
+        var startDate = new moment(dates[0]);
+        var endDate = new moment(dates[dates.length - 1]);
+
+        var usedColumnIds = [];
+
+        while (!startDate.isAfter(endDate)) {
+          var date = new moment(startDate);
+          var key = date.format('YYYY-MM-DD');
+
+          var x = date.toDate();
+          var timeValue = { x: x };
+          var distanceValue = { x: x };
+          var caloryValue = { x: x };
+
+          // accumulate value
+          data[key] && data[key].forEach(function (record) {
+            var columnId = 'activity-' + record.activity_index;
+            !lodash.includes(usedColumnIds, columnId) && usedColumnIds.push(columnId);
+
+            timeValue[columnId] = (timeValue[columnId] ? timeValue[columnId] : 0) + record.data.time;
+            distanceValue[columnId] = (distanceValue[columnId] ? distanceValue[columnId] : 0) + record.data.distance;
+            caloryValue[columnId] = (caloryValue[columnId] ? caloryValue[columnId] : 0) + record.data.calory;
+          });
+
+          timeData.push(timeValue);
+          distanceData.push(distanceValue);
+          caloryData.push(caloryValue);
+
+          startDate.add(1, 'day');
+        }
+
+        // exclude unused column
+        $scope.activityChart.columns = lodash.filter($scope.activityChart.columns, function(column) {
+          return lodash.includes(usedColumnIds, column.id);
+        });
+      }
+
+      // default chart
+      $scope.activityChart.data = distanceData;
+    });
+  }
+
+  getActivities().then(function(activityCount) {
+    getData(activityCount);
+  });
+
 
   // pieOptions
   $scope.pieOptions = {
@@ -69,8 +109,8 @@ angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $ht
     timeBase: 1,
     distance: 0,
     distanceBase: 1,
-    calories: 0,
-    caloriesBase: 1
+    calory: 0,
+    caloryBase: 1
   };
 
   $http.get('/api/today').success(function(results) {

@@ -37,15 +37,15 @@
 		</div>
 		<div class="col-md-4">
 			<div class="pie-container">
-				<div easypiechart options="pieOptions" percent="pie.calories / pie.caloriesBase * 100" class="pie">
+				<div easypiechart options="pieOptions" percent="pie.calory / pie.caloryBase * 100" class="pie">
           <div class="pie-content">
             <div>
-              <span class="percent" ng-bind="pie.calories"></span>
+              <span class="percent" ng-bind="pie.calory"></span>
               <span class="percent after">{{'cal' | translate}}</span>
             </div>
             <div>
               <span class="base before">{{'average' | translate}}</span>
-              <span class="base" ng-bind="pie.caloriesBase"></span>
+              <span class="base" ng-bind="pie.caloryBase"></span>
               <span class="base after">{{'cal' | translate}}</span>
             </div>
           </div>
@@ -57,7 +57,7 @@
     <div class="col-md-4">
       <div class="home-charts-right" ng-controller="AddActivityCtrl">
         <h2>{{ 'add_activity' | translate }}</h2>
-        <div class="activity-selector">
+        <div class="custom-selector">
           <custom-select
             ng-model="selectedActivities.activity"
             ng-options="activity for activity in activities"
@@ -111,9 +111,19 @@
 
           </div>
         </div>
-				<div id="line-chart">
-					<canvas id="line" class="chart chart-line chart-xl" data="line.data" labels="line.labels" click="line.onClick" series="line.series" colours="line.colours" options="line.options"></canvas>
-				</div>
+        <div class="row">
+          <c3chart bindto-id="activity-chart"
+                   chart-data="activityChart.data"
+                   chart-columns="activityChart.columns"
+                   chart-x="activityChart.x">
+            <chart-axis>
+              <chart-axis-x axis-id="x" axis-type="timeseries">
+                <chart-axis-x-tick tick-format="%m-%d"/>
+              </chart-axis-x>
+            </chart-axis>
+            <chart-group group-values="activity-0,activity-1,activity-2,activity-3,activity-4"/>
+          </c3chart>
+        </div>
 			</div>
 		</div>
 	</div>
