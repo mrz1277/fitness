@@ -45,6 +45,7 @@
   "fullname": "이름",
   "repeatpass": "비밀번호 재입력",
   "user_number": "회원번호",
+  "add_body": "신체 기록하기",
   "add_activity": "운동 추가하기",
   "select_activity": "▼ 운동을 선택하세요...",
   "Walking / Running": "걷기 / 달리기",
