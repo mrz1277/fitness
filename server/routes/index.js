@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/cal', function(req, res, next) {
-  res.json(['2015-05-23', '2015-05-22', '2015-05-21']);
+  res.json(['2015-06-02', '2015-06-04', '2015-06-09']);
 });
 
 router.get('/news', function(req, res) {
@@ -41,8 +41,8 @@ router.get('/today', function(req, res) {
     timeBase: 60,
     distance: 4,
     distanceBase: 5,
-    calories: 1000,
-    caloriesBase: 1500
+    calory: 1000,
+    caloryBase: 1500
   });
 });
 
@@ -60,9 +60,56 @@ router.get('/activities', function(req, res) {
       },
       {
         name: 'Yoga'
+      }
+    ]
+  });
+});
+
+// key(date) must be sorted
+router.get('/data', function(req, res) {
+  res.json({
+    '2015-06-01': [
+      {
+        activity_index: 0,
+        data: {
+          distance: 5,
+          time: 40,
+          calory: 1000
+        }
       },
       {
-        name: 'Weight Training'
+        activity_index: 1,
+        data: {
+          distance: 5,
+          time: 20,
+          calory: 500
+        }
+      },
+      {
+        activity_index: 0,
+        data: {
+          distance: 2,
+          time: 10,
+          calory: 200
+        }
+      }
+    ],
+    '2015-06-02': [
+      {
+        activity_index: 0,
+        data: {
+          distance: 3,
+          time: 20,
+          calory: 400
+        }
+      },
+      {
+        activity_index: 3,
+        data: {
+          distance: 2,
+          time: 10,
+          calory: 300
+        }
       }
     ]
   });
