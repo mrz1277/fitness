@@ -7,11 +7,24 @@
  * # MainCtrl
  * Controller of AniTheme
  */
-angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $http, $translate, $q, moment, $interval) {
+angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $http, $translate, $q, moment) {
   $scope.activityChart = {
     data: [],
     columns: [],
-    x: {id: 'x'}
+    x: {
+      id: 'x'
+    },
+    y: {
+      grid: {
+        text: '',
+        value: 5
+      }
+    },
+    format: {
+      value: function (value, ratio, id, index) {
+        return value + 'km';
+      }
+    }
   };
 
   var colors = ['#3CA2E0','#F0AD4E','#7AB67B','#D9534F','#3faae3'];

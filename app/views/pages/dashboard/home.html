@@ -41,12 +41,12 @@
           <div class="pie-content">
             <div>
               <span class="percent" ng-bind="pie.calory"></span>
-              <span class="percent after">{{'cal' | translate}}</span>
+              <span class="percent after">{{'calories' | translate}}</span>
             </div>
             <div>
               <span class="base before">{{'average' | translate}}</span>
               <span class="base" ng-bind="pie.caloryBase"></span>
-              <span class="base after">{{'cal' | translate}}</span>
+              <span class="base after">{{'calories' | translate}}</span>
             </div>
           </div>
 				</div>
@@ -99,31 +99,28 @@
       </div>
     </div>
 		<div class="col-md-8">
+      <!--<div class="btn-group" role="group">-->
+        <!--<button type="button" class="btn btn-default">{{'day' | translate}}</button>-->
+        <!--<button type="button" class="btn btn-default">{{'month' | translate}}</button>-->
+      <!--</div>-->
+      <!-- TODO axis label and tick-format cannot be dynamic. So I decide to remove range button and y label -->
 			<div class="home-charts-middle">
-        <div class="row">
-          <div class="col-xs-6">
-            <div class="btn-group" role="group">
-              <button type="button" class="btn btn-default">{{'day' | translate}}</button>
-              <button type="button" class="btn btn-default">{{'month' | translate}}</button>
-            </div>
-          </div>
-          <div class="col-xs-6">
-
-          </div>
-        </div>
-        <div class="row">
-          <c3chart bindto-id="activity-chart"
-                   chart-data="activityChart.data"
-                   chart-columns="activityChart.columns"
-                   chart-x="activityChart.x">
-            <chart-axis>
-              <chart-axis-x axis-id="x" axis-type="timeseries">
-                <chart-axis-x-tick tick-format="%m-%d"/>
-              </chart-axis-x>
-            </chart-axis>
-            <chart-group group-values="activity-0,activity-1,activity-2,activity-3,activity-4"/>
-          </c3chart>
-        </div>
+        <c3chart bindto-id="activity-chart"
+                 chart-data="activityChart.data"
+                 chart-columns="activityChart.columns"
+                 chart-x="activityChart.x">
+          <chart-axis>
+            <chart-axis-x axis-id="x" axis-type="timeseries">
+              <chart-axis-x-tick tick-format="%m-%d"/>
+            </chart-axis-x>
+            <!--<chart-axis-y axis-id="y" axis-label="Higher numbers"/>-->
+          </chart-axis>
+          <chart-group group-values="activity-0,activity-1,activity-2,activity-3,activity-4"/>
+          <chart-tooltip show-tooltip="true" value-format-function="activityChart.format.value"/>
+          <chart-grid show-x="false" show-y="true">
+            <chart-grid-optional axis-id="y" grid-value="5" grid-text="activityChart.y.grid.text"/>
+          </chart-grid>
+        </c3chart>
 			</div>
 		</div>
 	</div>
