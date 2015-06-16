@@ -65,54 +65,44 @@ router.get('/activities', function(req, res) {
   });
 });
 
-// key(date) must be sorted
 router.get('/data', function(req, res) {
-  res.json({
-    '2015-06-01': [
-      {
-        activity_index: 0,
-        data: {
-          distance: 5,
-          time: 40,
-          calory: 1000
-        }
-      },
-      {
-        activity_index: 1,
-        data: {
-          distance: 5,
-          time: 20,
-          calory: 500
-        }
-      },
-      {
-        activity_index: 0,
-        data: {
-          distance: 2,
-          time: 10,
-          calory: 200
-        }
-      }
-    ],
-    '2015-06-02': [
-      {
-        activity_index: 0,
-        data: {
-          distance: 3,
-          time: 20,
-          calory: 400
-        }
-      },
-      {
-        activity_index: 3,
-        data: {
-          distance: 2,
-          time: 10,
-          calory: 300
-        }
-      }
-    ]
-  });
+  res.json([
+    {
+      date: '2015-06-01',
+      activity_id: 0,
+      distance: 5,
+      time: 40,
+      calory: 1000
+    },
+    {
+      date: '2015-06-01',
+      activity_id: 1,
+      distance: 5,
+      time: 20,
+      calory: 500
+    },
+    {
+      date: '2015-06-01',
+      activity_id: 0,
+      distance: 2,
+      time: 10,
+      calory: 200
+    },
+    {
+      date: '2015-06-02',
+      activity_id: 0,
+      distance: 3,
+      time: 20,
+      calory: 400
+    },
+    {
+      date: '2015-06-02',
+      activity_id: 3,
+      distance: 2,
+      time: 10,
+      calory: 300
+    }
+  ]);
 });
 
 module.exports = router;

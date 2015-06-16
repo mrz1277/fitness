@@ -17,7 +17,7 @@ angular
     'ui.calendar',
     'chart.js',
     'textAngular',
-    'gridshore.c3js.chart',
+    'angularChart',
     'angular-growl',
     'growlNotifications',
     'angular-loading-bar',
