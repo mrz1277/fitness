@@ -42,7 +42,8 @@ router.get('/today', function(req, res) {
     distance: 4,
     distanceBase: 5,
     calory: 1000,
-    caloryBase: 1500
+    caloryBase: 1500,
+    goal: 'distance'
   });
 });
 
@@ -99,6 +100,13 @@ router.get('/data', function(req, res) {
       date: '2015-06-02',
       activity_id: 3,
       distance: 2,
+      time: 10,
+      calory: 300
+    },
+    {
+      date: '2015-06-05',
+      activity_id: 3,
+      distance: 6,
       time: 10,
       calory: 300
     }

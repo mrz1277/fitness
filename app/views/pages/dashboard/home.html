@@ -2,7 +2,7 @@
 <div class="conter-wrapper home-container" ng-controller="ChartCtrl">
 	<div class="row home-row text-center">
 		<div class="col-md-4">
-			<div class="pie-container">
+			<div class="pie-container" ng-click="changeData('time')" ng-class="selectedPieIndex === 0 ? 'selected' : ''">
 				<div easypiechart options="pieOptions" percent="pie.time / pie.timeBase * 100" class="pie">
           <div class="pie-content">
             <div>
@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="pie-container">
+			<div class="pie-container" ng-click="changeData('distance')" ng-class="selectedPieIndex === 1 ? 'selected' : ''">
 				<div easypiechart options="pieOptions" percent="pie.distance / pie.distanceBase * 100" class="pie">
           <div class="pie-content">
             <div>
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="pie-container">
+			<div class="pie-container" ng-click="changeData('calory')" ng-class="selectedPieIndex === 2 ? 'selected' : ''">
 				<div easypiechart options="pieOptions" percent="pie.calory / pie.caloryBase * 100" class="pie">
           <div class="pie-content">
             <div>
