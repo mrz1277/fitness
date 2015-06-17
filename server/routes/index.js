@@ -66,6 +66,7 @@ router.get('/activities', function(req, res) {
   });
 });
 
+// date must be sorted by ascending
 router.get('/data', function(req, res) {
   res.json([
     {
@@ -109,6 +110,20 @@ router.get('/data', function(req, res) {
       distance: 6,
       time: 10,
       calory: 300
+    },
+    {
+      date: '2015-06-08',
+      activity_id: 2,
+      distance: 1,
+      time: 3,
+      calory: 120
+    },
+    {
+      date: '2015-06-15',
+      activity_id: 0,
+      distance: 15,
+      time: 50,
+      calory: 1000
     }
   ]);
 });

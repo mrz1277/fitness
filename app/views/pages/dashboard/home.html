@@ -2,7 +2,7 @@
 <div class="conter-wrapper home-container" ng-controller="ChartCtrl">
 	<div class="row home-row text-center">
 		<div class="col-md-4">
-			<div class="pie-container" ng-click="changeData('time')" ng-class="selectedPieIndex === 0 ? 'selected' : ''">
+			<div class="pie-container" ng-click="reloadActivityData('time')" ng-class="selectedPieIndex === 0 ? 'selected' : ''">
 				<div easypiechart options="pieOptions" percent="pie.time / pie.timeBase * 100" class="pie">
           <div class="pie-content">
             <div>
@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="pie-container" ng-click="changeData('distance')" ng-class="selectedPieIndex === 1 ? 'selected' : ''">
+			<div class="pie-container" ng-click="reloadActivityData('distance')" ng-class="selectedPieIndex === 1 ? 'selected' : ''">
 				<div easypiechart options="pieOptions" percent="pie.distance / pie.distanceBase * 100" class="pie">
           <div class="pie-content">
             <div>
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="pie-container" ng-click="changeData('calory')" ng-class="selectedPieIndex === 2 ? 'selected' : ''">
+			<div class="pie-container" ng-click="reloadActivityData('calory')" ng-class="selectedPieIndex === 2 ? 'selected' : ''">
 				<div easypiechart options="pieOptions" percent="pie.calory / pie.caloryBase * 100" class="pie">
           <div class="pie-content">
             <div>
@@ -101,6 +101,13 @@
     </div>
 		<div class="col-md-8">
       <div class="home-charts-middle">
+        <div class="text-center">
+          <div class="btn-group">
+            <label class="btn btn-default" ng-model="activityRange" ng-click="reloadActivityData(null, 'day')" btn-radio="'day'">{{'day' | translate}}</label>
+            <label class="btn btn-default" ng-model="activityRange" ng-click="reloadActivityData(null, 'week')" btn-radio="'week'">{{'week' | translate}}</label>
+            <label class="btn btn-default" ng-model="activityRange" ng-click="reloadActivityData(null, 'month')" btn-radio="'month'">{{'month' | translate}}</label>
+          </div>
+        </div>
         <angular-chart options="activityChartOptions"></angular-chart>
       </div>
 		</div>

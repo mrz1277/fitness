@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of AniTheme
  */
-angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $http, $translate) {
+angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $http, $translate, moment) {
   $scope.activityChartOptions = {
     data: [],
     dimensions: {
@@ -46,43 +46,74 @@ angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $ht
   var colors = ['#3faae3','#D9534F','#7AB67B','#F0AD4E','#3CA2E0'];
   var timeData = [], distanceData = [], caloryData = [];
 
-  $scope.changeData = function(kind) {
-    if (kind === 'distance') {
+  function setData(_data, range) {
+    var data = lodash.slice(_data); // deep copy array
+    var groupBy = null;
+    if (range === 'week') {
+      groupBy = lodash.groupBy(data, function(d) {
+        return new moment(d.date).startOf('week').format('YYYY-MM-DD');
+      });
+    } else if (range === 'month') {
+      groupBy = lodash.groupBy(data, function(d) {
+        return new moment(d.date).startOf('month').format('YYYY-MM-DD');
+      });
+    }
+
+    if (groupBy) {
+      var returnData = [];
+      lodash.forEach(groupBy, function(dataOnGroup, group) {
+        var aData = {date: group};
+
+        //[{date:, activity-x:, activity-y:}, ...]
+        dataOnGroup.forEach(function(d) {
+          lodash.forEach(d, function(value, key) {
+            key !== 'date' && (aData[key] = (aData[key] ? aData[key] : 0) + value);
+          });
+        });
+
+        returnData.push(aData);
+      });
+      data = returnData;
+    }
+
+    $scope.activityChartOptions.chart.axis.y.max = lodash.sum(lodash.max(data, function(d) {
+      return lodash.sum(d);
+    }));
+    $scope.activityChartOptions.data = data;
+  }
+
+  $scope.reloadActivityData = function(kind, range) {
+    if ((kind && kind === 'distance') || $scope.selectedPieIndex === 1) {
       $scope.activityChartOptions.chart.tooltip.format.value = function (value, ratio, id, index) {
         return value + 'km';
       };
-      $scope.activityChartOptions.chart.axis.y.max = lodash.sum(lodash.max(distanceData, function(distance) {
-        return lodash.sum(distance);
-      }));
       $scope.activityChartOptions.chart.axis.y.label = 'km';
-      $scope.activityChartOptions.chart.grid.y.lines = [{value: $scope.pie.distanceBase, text: $translate.instant('goal')}]; // TODO
-      $scope.activityChartOptions.data = distanceData;
+
+      setData(distanceData, range);
+      $scope.activityChartOptions.chart.grid.y.lines = range === 'day' ? [{value: $scope.pie.distanceBase, text: ($scope.pie.goal === 'distance' ? $translate.instant('goal') : $translate.instant('average'))}] : []; // 목표(표준)치 라인은 일별일때만 표시
       $scope.selectedPieIndex = 1;
-    } else if (kind === 'time') {
+    } else if ((kind && kind === 'time') || $scope.selectedPieIndex === 0) {
       $scope.activityChartOptions.chart.tooltip.format.value = function (value, ratio, id, index) {
         return value + $translate.instant('min');
       };
-      $scope.activityChartOptions.chart.axis.y.max = lodash.sum(lodash.max(timeData, function(time) {
-        return lodash.sum(time);
-      }));
       $scope.activityChartOptions.chart.axis.y.label = $translate.instant('min');
-      $scope.activityChartOptions.chart.grid.y.lines = [{value: $scope.pie.timeBase, text: $translate.instant('average')}]; // TODO
-      $scope.activityChartOptions.data = timeData;
+
+      setData(timeData, range);
+      $scope.activityChartOptions.chart.grid.y.lines = range === 'day' ? [{value: $scope.pie.timeBase, text: ($scope.pie.goal === 'time' ? $translate.instant('goal') : $translate.instant('average'))}] : []; // TODO
       $scope.selectedPieIndex = 0;
-    } else if (kind === 'calory') {
+    } else if ((kind && kind === 'calory') || $scope.selectedPieIndex === 2) {
       $scope.activityChartOptions.chart.tooltip.format.value = function (value, ratio, id, index) {
         return value + $translate.instant('calories');
       };
-      $scope.activityChartOptions.chart.axis.y.max = lodash.sum(lodash.max(caloryData, function(calory) {
-        return lodash.sum(calory);
-      }));
       $scope.activityChartOptions.chart.axis.y.label = $translate.instant('calories');
-      $scope.activityChartOptions.chart.grid.y.lines = [{value: $scope.pie.caloryBase, text: $translate.instant('average')}]; // TODO
-      $scope.activityChartOptions.data = caloryData;
+
+      setData(caloryData, range);
+      $scope.activityChartOptions.chart.grid.y.lines = range === 'day' ? [{value: $scope.pie.caloryBase, text: ($scope.pie.goal === 'calory' ? $translate.instant('goal') : $translate.instant('average'))}] : []; // TODO
       $scope.selectedPieIndex = 2;
     }
   };
 
+  $scope.activityRange = 'day';
 
   // pieOptions
   $scope.pieOptions = {
@@ -138,12 +169,13 @@ angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $ht
           calory[activityId] = (calory[activityId] ? calory[activityId] : 0) + activity.calory;
         });
 
+        // {date:x, activity-0:y, activity-1:z}
         timeData.push(time);
         distanceData.push(distance);
         caloryData.push(calory);
       });
       // default
-      $scope.changeData($scope.pie.goal);
+      $scope.reloadActivityData($scope.pie.goal);
     });
   });
 
