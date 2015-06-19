@@ -1,13 +1,12 @@
 angular.module('AniTheme').controller('AddActivityCtrl', function ($scope, $http, $translate, lodash, moment) {
   // activity select
-  $scope.selectedActivities = {};
+  $scope.selectedActivity = {};
   $scope.activities = [];
 
   $http.get('/api/activity').success(function(result) {
-    lodash.forEach(result.activities, function(value, key, activity) {
-      $translate(activity[key].name).then(function(translatedName) {
-        $scope.activities.push(translatedName);
-      });
+    lodash.forEach(result, function(activity) {
+      activity.name = $translate.instant(activity.name);
+      $scope.activities.push(activity);
     });
   });
 

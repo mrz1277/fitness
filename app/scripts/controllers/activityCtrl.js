@@ -1,13 +1,6 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name AniTheme.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of AniTheme
- */
-angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $http, $translate, moment) {
+angular.module('AniTheme').controller('ActivityCtrl', function ($scope, lodash, $http, $translate, moment) {
   $scope.activityChartOptions = {
     data: [],
     dimensions: {

@@ -48,22 +48,24 @@ router.get('/today', function(req, res) {
 });
 
 router.get('/activity', function(req, res) {
-  res.json({
-    activities: [
+  res.json([
       {
-        name: 'Walking / Running'
+        name: 'Walking / Running',
+        type: 'aerobic'
       },
       {
-        name: 'Biking'
+        name: 'Biking',
+        type: 'aerobic'
       },
       {
-        name: 'Aerobics'
+        name: 'Aerobics',
+        type: 'aerobic'
       },
       {
-        name: 'Yoga'
+        name: 'Yoga',
+        type: 'aerobic'
       }
-    ]
-  });
+    ]);
 });
 
 router.get('/body', function(req, res) {
