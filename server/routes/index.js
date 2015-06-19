@@ -47,7 +47,7 @@ router.get('/today', function(req, res) {
   });
 });
 
-router.get('/activities', function(req, res) {
+router.get('/activity', function(req, res) {
   res.json({
     activities: [
       {
@@ -66,8 +66,38 @@ router.get('/activities', function(req, res) {
   });
 });
 
+router.get('/body', function(req, res) {
+  res.json([
+      {
+        name: 'Height',
+        unit: 'cm',
+        id: 0
+      },
+      {
+        name: 'Weight',
+        unit: 'kg',
+        id: 1
+      },
+      {
+        name: 'Lean Body Mass',
+        unit: 'kg',
+        id: 2
+      },
+      {
+        name: 'Body Fat Percent',
+        unit: '%',
+        id: 3
+      },
+      {
+        name: 'Body Mass Index',
+        unit: 'BMI',
+        id: 4
+      }
+    ]);
+});
+
 // date must be sorted by ascending
-router.get('/data', function(req, res) {
+router.get('/activity/data', function(req, res) {
   res.json([
     {
       date: '2015-06-01',
@@ -124,6 +154,46 @@ router.get('/data', function(req, res) {
       distance: 15,
       time: 50,
       calory: 1000
+    }
+  ]);
+});
+
+router.get('/body/data', function(req, res) {
+  res.json([
+    {
+      date: '2015-06-01',
+      body_id: 0,
+      value: 161
+    },
+    {
+      date: '2015-06-02',
+      body_id: 0,
+      value: 162
+    },
+    {
+      date: '2015-06-15',
+      body_id: 0,
+      value: 163
+    },
+    {
+      date: '2015-06-01',
+      body_id: 1,
+      value: 60
+    },
+    {
+      date: '2015-06-02',
+      body_id: 1,
+      value: 59
+    },
+    {
+      date: '2015-06-03',
+      body_id: 1,
+      value: 61
+    },
+    {
+      date: '2015-06-04',
+      body_id: 1,
+      value: 63
     }
   ]);
 });

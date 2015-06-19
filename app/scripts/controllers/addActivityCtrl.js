@@ -3,7 +3,7 @@ angular.module('AniTheme').controller('AddActivityCtrl', function ($scope, $http
   $scope.selectedActivities = {};
   $scope.activities = [];
 
-  $http.get('/api/activities').success(function(result) {
+  $http.get('/api/activity').success(function(result) {
     lodash.forEach(result.activities, function(value, key, activity) {
       $translate(activity[key].name).then(function(translatedName) {
         $scope.activities.push(translatedName);

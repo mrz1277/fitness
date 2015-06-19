@@ -140,7 +140,7 @@ angular.module('AniTheme').controller('ChartCtrl', function ($scope, lodash, $ht
     !lodash.isEmpty(results) && ($scope.pie = results);
 
     // $scope.pie base 값이 먼저 들어와야 첫 grid 를 제대로 그릴 수 있음.
-    $http.get('/api/data').success(function(data) {
+    $http.get('/api/activity/data').success(function(data) {
       var groupByDate = {};
 
       data.forEach(function(d) {
