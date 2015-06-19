@@ -6,8 +6,7 @@ router.get('/cal', function(req, res, next) {
 });
 
 router.get('/news', function(req, res) {
-  res.json({
-    feeds: [
+  res.json([
       {
         content: '헬스 휘트니스 옷장과 화장대 내 무단 보관된 사물은 내일 폐기합니다.',
         date: '2015-05-18'
@@ -24,8 +23,7 @@ router.get('/news', function(req, res) {
         content: '재등록하셔서 다시 운동하는 모습으로 뵙기를 바랍니다. ^^',
         date: '2015-05-04'
       }
-    ]
-  });
+    ]);
 });
 
 router.get('/profile', function(req, res) {
