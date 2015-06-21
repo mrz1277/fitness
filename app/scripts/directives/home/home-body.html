@@ -5,7 +5,7 @@
       <div class="custom-selector">
         <custom-select
           ng-model="selectedBody.body"
-          ng-options="body as b.name for b in bodies"
+          ng-options="body as body.name for body in bodies"
           placeholder="{{ 'select_body' | translate }}">
         </custom-select>
       </div>

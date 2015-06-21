@@ -59,7 +59,7 @@
         <div class="custom-selector">
           <custom-select
             ng-model="selectedActivity.activity"
-            ng-options="activity as a.name for a in activities"
+            ng-options="activity as activity.name for activity in activities"
             placeholder="{{ 'select_activity' | translate }}">
           </custom-select>
         </div>
