@@ -129,6 +129,10 @@ angular.module('AniTheme').controller('ActivityCtrl', function ($scope, lodash, 
     goal:'time'
   };
 
+  $scope.baseName = function(name) {
+    return $scope.pie.goal === name ? $translate.instant('goal') : $translate.instant('average');
+  };
+
   $http.get('/api/today').success(function(results) {
     !lodash.isEmpty(results) && ($scope.pie = results);
 

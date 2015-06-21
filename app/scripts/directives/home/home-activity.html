@@ -9,7 +9,7 @@
               <span class="percent after">{{'min' | translate}}</span>
             </div>
             <div>
-              <span class="base before">{{'average' | translate}}</span>
+              <span class="base before">{{ baseName('time') }}</span>
               <span class="base" ng-bind="pie.timeBase"></span>
               <span class="base after">{{'min' | translate}}</span>
             </div>
@@ -26,7 +26,7 @@
               <span class="percent after">{{'km' | translate}}</span>
             </div>
             <div>
-              <span class="base before">{{'average' | translate}}</span>
+              <span class="base before">{{ baseName('distance') }}</span>
               <span class="base" ng-bind="pie.distanceBase"></span>
               <span class="base after">{{'km' | translate}}</span>
             </div>
@@ -43,7 +43,7 @@
               <span class="percent after">{{'calories' | translate}}</span>
             </div>
             <div>
-              <span class="base before">{{'average' | translate}}</span>
+              <span class="base before">{{ baseName('calory') }}</span>
               <span class="base" ng-bind="pie.caloryBase"></span>
               <span class="base after">{{'calories' | translate}}</span>
             </div>
