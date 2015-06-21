@@ -83,7 +83,7 @@ angular.module('AniTheme').controller('ActivityCtrl', function ($scope, lodash, 
       $scope.activityChartOptions.chart.axis.y.label = 'km';
 
       setData(distanceData, range);
-      $scope.activityChartOptions.chart.grid.y.lines = range === 'day' ? [{value: $scope.pie.distanceBase, text: ($scope.pie.goal === 'distance' ? $translate.instant('goal') : $translate.instant('average'))}] : []; // 목표(표준)치 라인은 일별일때만 표시
+      $scope.activityChartOptions.chart.grid.y.lines = (range || $scope.activityRange) === 'day' ? [{value: $scope.pie.distanceBase, text: ($scope.pie.goal === 'distance' ? $translate.instant('goal') : $translate.instant('average'))}] : []; // 목표(표준)치 라인은 일별일때만 표시
       $scope.selectedPieIndex = 1;
     } else if ((kind && kind === 'time') || (range && $scope.selectedPieIndex === 0)) {
       $scope.activityChartOptions.chart.tooltip.format.value = function (value, ratio, id, index) {
@@ -92,7 +92,7 @@ angular.module('AniTheme').controller('ActivityCtrl', function ($scope, lodash, 
       $scope.activityChartOptions.chart.axis.y.label = $translate.instant('min');
 
       setData(timeData, range);
-      $scope.activityChartOptions.chart.grid.y.lines = range === 'day' ? [{value: $scope.pie.timeBase, text: ($scope.pie.goal === 'time' ? $translate.instant('goal') : $translate.instant('average'))}] : []; // TODO
+      $scope.activityChartOptions.chart.grid.y.lines = (range || $scope.activityRange) === 'day' ? [{value: $scope.pie.timeBase, text: ($scope.pie.goal === 'time' ? $translate.instant('goal') : $translate.instant('average'))}] : [];
       $scope.selectedPieIndex = 0;
     } else if ((kind && kind === 'calory') || (range && $scope.selectedPieIndex === 2)) {
       $scope.activityChartOptions.chart.tooltip.format.value = function (value, ratio, id, index) {
@@ -101,7 +101,7 @@ angular.module('AniTheme').controller('ActivityCtrl', function ($scope, lodash, 
       $scope.activityChartOptions.chart.axis.y.label = $translate.instant('calories');
 
       setData(caloryData, range);
-      $scope.activityChartOptions.chart.grid.y.lines = range === 'day' ? [{value: $scope.pie.caloryBase, text: ($scope.pie.goal === 'calory' ? $translate.instant('goal') : $translate.instant('average'))}] : []; // TODO
+      $scope.activityChartOptions.chart.grid.y.lines = (range === 'day' || $scope.activityRange) ? [{value: $scope.pie.caloryBase, text: ($scope.pie.goal === 'calory' ? $translate.instant('goal') : $translate.instant('average'))}] : [];
       $scope.selectedPieIndex = 2;
     }
 
