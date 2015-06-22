@@ -69,28 +69,28 @@ router.get('/activity', function(req, res) {
 router.get('/body', function(req, res) {
   res.json([
       {
-        name: 'Height',
-        unit: 'cm',
-        id: 0
-      },
-      {
         name: 'Weight',
         unit: 'kg',
-        id: 1
+        id: 0
       },
       {
         name: 'Lean Body Mass',
         unit: 'kg',
-        id: 2
+        id: 1
       },
       {
         name: 'Body Fat Percent',
         unit: '%',
-        id: 3
+        id: 2
       },
       {
         name: 'Body Mass Index',
         unit: 'BMI',
+        id: 3
+      },
+      {
+        name: 'Height',
+        unit: 'cm',
         id: 4
       }
     ]);
@@ -162,37 +162,37 @@ router.get('/body/data', function(req, res) {
   res.json([
     {
       date: '2015-06-01',
-      body_id: 0,
+      body_id: 4,
       value: 161
     },
     {
       date: '2015-06-02',
-      body_id: 0,
+      body_id: 4,
       value: 162
     },
     {
       date: '2015-06-15',
-      body_id: 0,
+      body_id: 4,
       value: 163
     },
     {
       date: '2015-06-01',
-      body_id: 1,
+      body_id: 0,
       value: 60
     },
     {
       date: '2015-06-02',
-      body_id: 1,
+      body_id: 0,
       value: 59
     },
     {
       date: '2015-06-03',
-      body_id: 1,
+      body_id: 0,
       value: 61
     },
     {
       date: '2015-06-04',
-      body_id: 1,
+      body_id: 0,
       value: 63
     }
   ]);
