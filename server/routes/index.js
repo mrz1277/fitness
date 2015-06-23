@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var UserActivity = require('../models/UserActivity');
+var UserBody = require('../models/UserBody');
 var moment = require('moment');
 var util = require('util');
 
@@ -204,7 +205,7 @@ router.get('/activity/data', function(req, res) {
 });
 
 router.get('/body/data', function(req, res) {
-  res.json([
+  var dummy = [
     {
       date: '2015-06-01',
       body_id: 4,
@@ -240,7 +241,20 @@ router.get('/body/data', function(req, res) {
       body_id: 0,
       value: 63
     }
-  ]);
+  ];
+
+  var query = UserBody.find().lean();
+  query.sort('date');
+  query.exec(function(err, bodies) {
+    if (err) res.status(500).json(err);
+    else {
+      bodies.forEach(function(body) {
+        body.date = moment(body.date).format('YYYY-MM-DD');
+        dummy.push(body);
+      });
+      res.json(dummy);
+    }
+  });
 });
 
 router.post('/activity', function(req, res) {
@@ -250,6 +264,21 @@ router.post('/activity', function(req, res) {
   req.body.datetime = moment(req.body.datetime).toDate();
 
   new UserActivity(req.body).save(function(err) {
+    if (err) {
+      res.json(500, err);
+    } else {
+      res.sendStatus(204);
+    }
+  });
+});
+
+router.post('/body', function(req, res) {
+  // TODO validate request data
+  // TODO check if duplicate
+
+  req.body.date = moment(req.body.date).toDate();
+
+  new UserBody(req.body).save(function(err) {
     if (err) {
       res.json(500, err);
     } else {

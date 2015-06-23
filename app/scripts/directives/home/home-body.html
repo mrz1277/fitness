@@ -1,6 +1,6 @@
 <div class="row home-row" ng-controller="BodyMeasurementCtrl">
   <div class="col-md-4">
-    <div class="home-charts-right">
+    <form class="home-charts-right" ng-submit="addBodyMeasurement()">
       <h2>{{ 'add_body' | translate }}</h2>
       <div class="custom-selector">
         <custom-select
@@ -16,31 +16,41 @@
                  datepicker-popup="yyyy-MM-dd"
                  ng-model="date"
                  max-date="maxDate"
-                 is-open="opened"
+                 is-open="openedBodyCalendar"
                  datepicker-options="dateOptions"
                  ng-required="true"
                  close-text="{{'close' | translate}}"
                  current-text="{{'current' | translate}}"
                  clear-text="{{'clear' | translate}}"
-                 ng-click="open($event)" />
+                 ng-click="openBodyCalendar($event)" />
         </div>
       </div>
       <div class="body-data text-center row">
-        <input type="number" placeholder="{{ selectedBody.body.unit }}">
+        <input type="number" ng-model="body.value" step="any" placeholder="{{ selectedBody.body.unit }}">
       </div>
-      <button class="btn btn-block btn-default">{{'add' | translate}}</button>
-    </div>
+      <button class="btn btn-block btn-default" type="submit">{{'add' | translate}}</button>
+    </form>
   </div>
   <div class="col-md-8">
     <div class="home-charts-middle">
       <div class="text-center">
         <div class="btn-group">
-          <label class="btn btn-default" ng-model="bodyRange" ng-click="reloadBodyData(null, 'day')" btn-radio="'day'">{{'day' | translate}}</label>
-          <label class="btn btn-default" ng-model="bodyRange" ng-click="reloadBodyData(null, 'week')" btn-radio="'week'">{{'week' | translate}}</label>
-          <label class="btn btn-default" ng-model="bodyRange" ng-click="reloadBodyData(null, 'month')" btn-radio="'month'">{{'month' | translate}}</label>
+          <label class="btn btn-default" ng-model="bodyRange" ng-click="drawBodyChart(null, 'day')" btn-radio="'day'">{{'day' | translate}}</label>
+          <label class="btn btn-default" ng-model="bodyRange" ng-click="drawBodyChart(null, 'week')" btn-radio="'week'">{{'week' | translate}}</label>
+          <label class="btn btn-default" ng-model="bodyRange" ng-click="drawBodyChart(null, 'month')" btn-radio="'month'">{{'month' | translate}}</label>
         </div>
       </div>
       <angular-chart options="bodyChartOptions"></angular-chart>
     </div>
   </div>
+  <growl-notifications>
+    <growl-notification ng-if="showGrowlSuccess" class="growl-info fading" ttl="3000">
+      <a href="javascript:;" ng-click="$growlNotification.remove()" class="close"><i class="fa fa-times"></i></a>
+      {{ 'Saved' | translate }}
+    </growl-notification>
+    <growl-notification ng-if="showGrowlError" class="growl-error fading" ttl="3000">
+      <a href="javascript:;" ng-click="$growlNotification.remove()" class="close"><i class="fa fa-times"></i></a>
+      {{ 'An error occured' | translate }}
+    </growl-notification>
+  </growl-notifications>
 </div>

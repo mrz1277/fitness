@@ -1,27 +1,10 @@
 'use strict';
 
 angular.module('AniTheme').controller('BodyMeasurementCtrl', function ($scope, lodash, $http, $translate, moment) {
+  $scope.body = {}; // for request body 
   $scope.selectedBody = {}; // {body: {name: '', unit: '', id: ''}}
   $scope.bodies = []; // body measurement list
   $scope.bodyData = null; // real data ({0: {}, 1: {}, ...} group by id)
-
-  $http.get('/api/body').success(function(result) {
-    lodash.forEach(result, function(body) {
-      body.name = $translate.instant(body.name);
-      $scope.bodies.push(body);
-    });
-
-    $http.get('/api/body/data').success(function(data) {
-      $scope.bodyData = lodash.groupBy(data, function(d) {
-        return d.body_id;
-      });
-
-      // default (0: height)
-      $scope.bodyChartOptions.data = $scope.bodyData[0]; //chart data
-      $scope.selectedBody.body = $scope.bodies[0]; //custom-select option
-      $scope.bodyRange = 'day';
-    });
-  });
 
   // date-picker
   $scope.today = function() {
@@ -34,11 +17,11 @@ angular.module('AniTheme').controller('BodyMeasurementCtrl', function ($scope, l
     $scope.date = null;
   };
 
-  $scope.open = function($event) {
+  $scope.openBodyCalendar = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
 
-    $scope.opened = true;
+    $scope.openedBodyCalendar = true;
   };
 
   $scope.dateOptions = {
@@ -81,7 +64,28 @@ angular.module('AniTheme').controller('BodyMeasurementCtrl', function ($scope, l
     }
   };
 
-  function reloadData(body, range) {
+  function loadData() {
+    $http.get('/api/body').success(function(result) {
+      lodash.forEach(result, function(body) {
+        body.name = $translate.instant(body.name);
+        $scope.bodies.push(body);
+      });
+
+      $http.get('/api/body/data').success(function(data) {
+        $scope.bodyData = lodash.groupBy(data, function(d) {
+          return d.body_id;
+        });
+
+        // default (0: height)
+        $scope.bodyChartOptions.data = $scope.bodyData[0]; //chart data
+        $scope.selectedBody.body = $scope.bodies[0]; //custom-select option
+        $scope.bodyRange = 'day';
+      });
+    });
+  }
+  loadData();
+
+  function drawBodyChart(body, range) {
     if (body === null) {
       body = $scope.selectedBody.body;
     }
@@ -124,9 +128,25 @@ angular.module('AniTheme').controller('BodyMeasurementCtrl', function ($scope, l
 
   $scope.$watch('selectedBody.body', function(newValue, oldValue) {
     if (newValue) {
-      reloadData(newValue);
+      drawBodyChart(newValue);
     }
   });
 
-  $scope.reloadBodyData = reloadData;
+  $scope.drawBodyChart = drawBodyChart;
+  
+  $scope.addBodyMeasurement = function() {
+    // TODO validate data (integer)
+
+    $scope.body.body_id = $scope.selectedBody.body.id;
+    $scope.body.date = new moment($scope.date).format('YYYY-MM-DD');
+
+    $http.post('/api/body', $scope.body)
+      .success(function(data) {
+        $scope.showBodyGrowlSuccess = true;
+        loadData();
+      })
+      .error(function(data, status) {
+        $scope.showBodyGrowlError = true;
+      });
+  }
 });
