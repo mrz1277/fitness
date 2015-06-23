@@ -6,7 +6,17 @@ var moment = require('moment');
 var util = require('util');
 
 router.get('/cal', function(req, res, next) {
-  res.json(['2015-06-02', '2015-06-04', '2015-06-09']);
+  var dummy = ['2015-06-01', '2015-06-02', '2015-06-05', '2015-06-08', '2015-06-15'];
+
+  UserActivity.find().lean().exec(function(err, result) {
+    if (err) res.status(500).json(err);
+    else {
+      result.forEach(function(activity) {
+        dummy.push(moment(activity.datetime).format('YYYY-MM-DD'));
+      });
+      res.json(dummy);
+    }
+  });
 });
 
 router.get('/news', function(req, res) {
