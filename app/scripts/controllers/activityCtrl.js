@@ -75,7 +75,7 @@ angular.module('AniTheme').controller('ActivityCtrl', function ($scope, lodash, 
     $scope.activityChartOptions.data = data;
   }
 
-  $scope.reloadActivityData = function(kind, range) {
+  $scope.drawChart = function(kind, range) {
     if ((kind && kind === 'distance') || (range && $scope.selectedPieIndex === 1)) {
       $scope.activityChartOptions.chart.tooltip.format.value = function (value, ratio, id, index) {
         return value + 'km';
@@ -133,49 +133,52 @@ angular.module('AniTheme').controller('ActivityCtrl', function ($scope, lodash, 
     return $scope.pie.goal === name ? $translate.instant('goal') : $translate.instant('average');
   };
 
-  $http.get('/api/today').success(function(results) {
-    !lodash.isEmpty(results) && ($scope.pie = results);
+  $scope.loadData = function() {
+    $http.get('/api/today').success(function(results) {
+      !lodash.isEmpty(results) && ($scope.pie = results);
 
-    // $scope.pie base 값이 먼저 들어와야 첫 grid 를 제대로 그릴 수 있음.
-    $http.get('/api/activity/data').success(function(data) {
-      var groupByDate = {};
+      // $scope.pie base 값이 먼저 들어와야 첫 grid 를 제대로 그릴 수 있음.
+      $http.get('/api/activity/data').success(function(data) {
+        var groupByDate = {};
 
-      data.forEach(function(d) {
-        var activityId = 'activity-' + d.activity_id;
+        data.forEach(function(d) {
+          var activityId = 'activity-' + d.activity_id;
 
-        if (!$scope.activityChartOptions.dimensions[activityId]) {
-          $translate(activityId).then(function(translatedName) {
-            $scope.activityChartOptions.dimensions['activity-' + d.activity_id] = {
-              type: 'bar',
-              //color: colors.pop(),
-              name: translatedName
-            }
-          });
-          $scope.activityChartOptions.chart.data.groups[0].push(activityId);
-        }
+          if (!$scope.activityChartOptions.dimensions[activityId]) {
+            $translate(activityId).then(function(translatedName) {
+              $scope.activityChartOptions.dimensions['activity-' + d.activity_id] = {
+                type: 'bar',
+                //color: colors.pop(),
+                name: translatedName
+              }
+            });
+            $scope.activityChartOptions.chart.data.groups[0].push(activityId);
+          }
 
-        groupByDate[d.date] ? groupByDate[d.date].push(d) : (groupByDate[d.date] = [d]);
-      });
-
-      // { '2015-06-01: [{$1}, {$2}, {$1'}]', ... }
-      lodash.forEach(groupByDate, function(activitiesOnDate, date) {
-        var time = {date: date}, distance = {date:date}, calory = {date:date};
-
-        activitiesOnDate.forEach(function(activity) {
-          var activityId = 'activity-' + activity.activity_id;
-          time[activityId] = (time[activityId] ? time[activityId] : 0) + activity.time;
-          distance[activityId] = (distance[activityId] ? distance[activityId] : 0) + activity.distance;
-          calory[activityId] = (calory[activityId] ? calory[activityId] : 0) + activity.calory;
+          groupByDate[d.date] ? groupByDate[d.date].push(d) : (groupByDate[d.date] = [d]);
         });
 
-        // {date:x, activity-0:y, activity-1:z}
-        timeData.push(time);
-        distanceData.push(distance);
-        caloryData.push(calory);
+        // { '2015-06-01: [{$1}, {$2}, {$1'}]', ... }
+        lodash.forEach(groupByDate, function(activitiesOnDate, date) {
+          var time = {date: date}, distance = {date:date}, calory = {date:date};
+
+          activitiesOnDate.forEach(function(activity) {
+            var activityId = 'activity-' + activity.activity_id;
+            time[activityId] = (time[activityId] ? time[activityId] : 0) + activity.time;
+            distance[activityId] = (distance[activityId] ? distance[activityId] : 0) + activity.distance;
+            calory[activityId] = (calory[activityId] ? calory[activityId] : 0) + activity.calory;
+          });
+
+          // {date:x, activity-0:y, activity-1:z}
+          timeData.push(time);
+          distanceData.push(distance);
+          caloryData.push(calory);
+        });
+        // default
+        $scope.drawChart($scope.pie.goal);
       });
-      // default
-      $scope.reloadActivityData($scope.pie.goal);
     });
-  });
+  };
+  $scope.loadData();
 
 });

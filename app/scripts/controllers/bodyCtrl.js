@@ -25,18 +25,14 @@ angular.module('AniTheme').controller('BodyMeasurementCtrl', function ($scope, l
 
   // date-picker
   $scope.today = function() {
-    $scope.dt = new Date();
+    $scope.date = new Date();
+    $scope.maxDate = new Date();
   };
   $scope.today();
 
   $scope.clear = function () {
-    $scope.dt = null;
+    $scope.date = null;
   };
-
-  $scope.toggleMin = function() {
-    $scope.minDate = $scope.minDate ? null : new Date();
-  };
-  $scope.toggleMin();
 
   $scope.open = function($event) {
     $event.preventDefault();

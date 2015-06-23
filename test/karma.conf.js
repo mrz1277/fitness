@@ -23,7 +23,6 @@ module.exports = function(config) {
       '../bower_components/angular-ui-calendar/src/calendar.js',
       '../bower_components/Chart.js/Chart.js',
       '../bower_components/angular-chart.js/dist/angular-chart.js',
-      '../bower_components/angular-growl/build/angular-growl.js',
       '../bower_components/angular-loading-bar/build/loading-bar.js',
       '../bower_components/angular-growl-notifications/dist/angular-growl-notifications.js',
       '../bower_components/rangy/rangy-core.js',

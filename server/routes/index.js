@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
+var UserActivity = require('../models/UserActivity');
+var moment = require('moment');
+var util = require('util');
+
 router.get('/cal', function(req, res, next) {
   res.json(['2015-06-02', '2015-06-04', '2015-06-09']);
 });
@@ -34,7 +38,7 @@ router.get('/profile', function(req, res) {
 });
 
 router.get('/today', function(req, res) {
-  res.json({
+  var dummy = {
     time: 50,
     timeBase: 60,
     distance: 4,
@@ -42,6 +46,19 @@ router.get('/today', function(req, res) {
     calory: 1000,
     caloryBase: 1500,
     goal: 'distance'
+  };
+
+  UserActivity.find({ datetime: { $gt: moment().startOf('d').toDate() } }, function(err, activities) {
+    if (err) res.status(500).json(err);
+    else {
+      activities.forEach(function(activity) {
+        dummy.time += activity.time;
+        dummy.distance += activity.distance;
+        dummy.calory += activity.calory;
+      });
+
+      res.json(dummy);
+    }
   });
 });
 
@@ -49,19 +66,23 @@ router.get('/activity', function(req, res) {
   res.json([
       {
         name: 'Walking / Running',
-        type: 'aerobic'
+        type: 'aerobic',
+        id: 0
       },
       {
         name: 'Biking',
-        type: 'aerobic'
+        type: 'aerobic',
+        id: 1
       },
       {
         name: 'Aerobics',
-        type: 'aerobic'
+        type: 'aerobic',
+        id: 2
       },
       {
         name: 'Yoga',
-        type: 'aerobic'
+        type: 'aerobic',
+        id: 3
       }
     ]);
 });
@@ -98,7 +119,7 @@ router.get('/body', function(req, res) {
 
 // date must be sorted by ascending
 router.get('/activity/data', function(req, res) {
-  res.json([
+  var dummy = [
     {
       date: '2015-06-01',
       activity_id: 0,
@@ -155,7 +176,21 @@ router.get('/activity/data', function(req, res) {
       time: 50,
       calory: 1000
     }
-  ]);
+  ];
+
+  var query = UserActivity.find();
+  query.sort('datetime');
+  query.exec(function(err, activities) {
+    if (err) res.status(500).json(err);
+    else {
+      activities.forEach(function(activityModel) {
+        var activity = activityModel.toJSON();
+        activity.date = moment(activity.datetime).format('YYYY-MM-DD');
+        dummy.push(activity);
+      });
+      res.json(dummy);
+    }
+  });
 });
 
 router.get('/body/data', function(req, res) {
@@ -196,6 +231,21 @@ router.get('/body/data', function(req, res) {
       value: 63
     }
   ]);
+});
+
+router.post('/activity', function(req, res) {
+  // TODO validate request data
+  // TODO check if duplicate
+
+  req.body.datetime = moment(req.body.datetime).toDate();
+
+  new UserActivity(req.body).save(function(err) {
+    if (err) {
+      res.json(500, err);
+    } else {
+      res.sendStatus(204);
+    }
+  });
 });
 
 module.exports = router;

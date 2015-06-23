@@ -1,4 +1,6 @@
 angular.module('AniTheme').controller('AddActivityCtrl', function ($scope, $http, $translate, lodash, moment) {
+  $scope.activity = {};
+
   // activity select
   $scope.selectedActivity = {};
   $scope.activities = [];
@@ -12,18 +14,14 @@ angular.module('AniTheme').controller('AddActivityCtrl', function ($scope, $http
 
   // date-picker
   $scope.today = function() {
-    $scope.dt = new Date();
+    $scope.date = new Date();
+    $scope.maxDate = new Date();
   };
   $scope.today();
 
   $scope.clear = function () {
-    $scope.dt = null;
+    $scope.date = null;
   };
-
-  $scope.toggleMin = function() {
-    $scope.minDate = $scope.minDate ? null : new Date();
-  };
-  $scope.toggleMin();
 
   $scope.open = function($event) {
     $event.preventDefault();
@@ -45,8 +43,23 @@ angular.module('AniTheme').controller('AddActivityCtrl', function ($scope, $http
   minute_1 % 10 > 5 && current.minute(minute_10+5);
   minute_1 % 10 < 5 && current.minute(minute_10);
   $scope.time = current.toDate();
-
-  $scope.changed = function () {
+  $scope.timeChanged = function() {
 
   };
+
+  $scope.addActivity = function() {
+    // TODO validate data (integer)
+
+    $scope.activity.activity_id = $scope.selectedActivity.activity.id;
+    $scope.activity.datetime = new moment($scope.date).format('YYYY-MM-DD') + 'T' + new moment($scope.time).format('HH:mm');
+
+    $http.post('/api/activity', $scope.activity)
+      .success(function(data) {
+        $scope.showGrowlSuccess = true;
+        $scope.$parent.loadData();
+      })
+      .error(function(data, status) {
+        $scope.showGrowlError = true;
+      });
+  }
 });

@@ -73,5 +73,7 @@
   "day": "일",
   "week": "주",
   "month": "월",
-  "goal": "목표"
+  "goal": "목표",
+  "Saved": "저장되었습니다",
+  "An error occured": "에러가 발생했습니다"
 }

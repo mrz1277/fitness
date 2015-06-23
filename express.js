@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var liveLoad = require('connect-livereload');
+var logger = require('morgan');
 
 /**
  * API keys and Passport configuration.
@@ -22,15 +23,15 @@ mongoose.connection.on('error', function() {
 });
 
 app.use(liveLoad({port: 35729}));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static('.tmp'));
 app.use(express.static('app'));
 app.use('/bower_components', express.static('bower_components'));
-app.use(serveIndex('app'));
-
 app.use('/api', require('./server/routes/index'));
+app.use(serveIndex('app'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

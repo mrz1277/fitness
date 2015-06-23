@@ -1,7 +1,7 @@
 <div ng-controller="ActivityCtrl">
   <div class="row home-row text-center">
     <div class="col-md-4">
-      <div class="pie-container" ng-click="reloadActivityData('time')" ng-class="selectedPieIndex === 0 ? 'selected' : ''">
+      <div class="pie-container" ng-click="drawChart('time')" ng-class="selectedPieIndex === 0 ? 'selected' : ''">
         <div easypiechart options="pieOptions" percent="pie.time / pie.timeBase * 100" class="pie">
           <div class="pie-content">
             <div>
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="pie-container" ng-click="reloadActivityData('distance')" ng-class="selectedPieIndex === 1 ? 'selected' : ''">
+      <div class="pie-container" ng-click="drawChart('distance')" ng-class="selectedPieIndex === 1 ? 'selected' : ''">
         <div easypiechart options="pieOptions" percent="pie.distance / pie.distanceBase * 100" class="pie">
           <div class="pie-content">
             <div>
@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="pie-container" ng-click="reloadActivityData('calory')" ng-class="selectedPieIndex === 2 ? 'selected' : ''">
+      <div class="pie-container" ng-click="drawChart('calory')" ng-class="selectedPieIndex === 2 ? 'selected' : ''">
         <div easypiechart options="pieOptions" percent="pie.calory / pie.caloryBase * 100" class="pie">
           <div class="pie-content">
             <div>
@@ -54,7 +54,7 @@
   </div>
   <div class="row home-row">
     <div class="col-md-4">
-      <div class="home-charts-right" ng-controller="AddActivityCtrl">
+      <form class="home-charts-right" ng-controller="AddActivityCtrl" ng-submit="addActivity()">
         <h2>{{ 'add_activity' | translate }}</h2>
         <div class="custom-selector">
           <custom-select
@@ -68,10 +68,11 @@
             <input type="text"
                    class="form-control"
                    datepicker-popup="yyyy-MM-dd"
-                   ng-model="dt"
+                   ng-model="date"
                    is-open="opened"
                    datepicker-options="dateOptions"
                    ng-required="true"
+                   max-date="maxDate"
                    close-text="{{'close' | translate}}"
                    current-text="{{'current' | translate}}"
                    clear-text="{{'clear' | translate}}"
@@ -79,32 +80,42 @@
           </div>
           <div class="col-xs-6 time-picker">
             <timepicker ng-model="time"
-                        ng-change="changed()"
+                        ng-change="timeChanged()"
                         show-meridian="false"
                         minute-step="5"></timepicker>
           </div>
         </div>
         <div class="activity-data text-center row">
           <div class="col-sm-6">
-            <input type="number" class="col-md-4">{{ 'min' | translate }}
+            <input type="number" class="col-md-4" ng-model="activity.time">{{ 'min' | translate }}
           </div>
           <div class="col-sm-6">
-            <input type="number" class="col-md-4">{{ 'km' | translate }}
+            <input type="number" class="col-md-4" ng-model="activity.distance">{{ 'km' | translate }}
           </div>
           <div class="col-sm-6">
-            <input type="number" class="col-md-4">{{ 'calories' | translate }}
+            <input type="number" class="col-md-4" ng-model="activity.calory">{{ 'calories' | translate }}
           </div>
         </div>
-        <button class="btn btn-block btn-default">{{'add' | translate}}</button>
-      </div>
+        <button class="btn btn-block btn-default" type="submit">{{'add' | translate}}</button>
+        <growl-notifications>
+          <growl-notification ng-if="showGrowlSuccess" class="growl-info fading" ttl="2000">
+            <a href="javascript:;" ng-click="$growlNotification.remove()" class="close"><i class="fa fa-times"></i></a>
+            {{ 'Saved' | translate }}
+          </growl-notification>
+          <growl-notification ng-if="showGrowlError" class="growl-error fading" ttl="2000">
+            <a href="javascript:;" ng-click="$growlNotification.remove()" class="close"><i class="fa fa-times"></i></a>
+            {{ 'An error occured' | translate }}
+          </growl-notification>
+        </growl-notifications>
+      </form>
     </div>
     <div class="col-md-8">
       <div class="home-charts-middle">
         <div class="text-center">
           <div class="btn-group">
-            <label class="btn btn-default" ng-model="activityRange" ng-click="reloadActivityData(null, 'day')" btn-radio="'day'">{{'day' | translate}}</label>
-            <label class="btn btn-default" ng-model="activityRange" ng-click="reloadActivityData(null, 'week')" btn-radio="'week'">{{'week' | translate}}</label>
-            <label class="btn btn-default" ng-model="activityRange" ng-click="reloadActivityData(null, 'month')" btn-radio="'month'">{{'month' | translate}}</label>
+            <label class="btn btn-default" ng-model="activityRange" ng-click="drawChart(null, 'day')" btn-radio="'day'">{{'day' | translate}}</label>
+            <label class="btn btn-default" ng-model="activityRange" ng-click="drawChart(null, 'week')" btn-radio="'week'">{{'week' | translate}}</label>
+            <label class="btn btn-default" ng-model="activityRange" ng-click="drawChart(null, 'month')" btn-radio="'month'">{{'month' | translate}}</label>
           </div>
         </div>
         <angular-chart options="activityChartOptions"></angular-chart>

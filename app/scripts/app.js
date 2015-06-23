@@ -18,7 +18,6 @@ angular
     'chart.js',
     'textAngular',
     'angularChart',
-    'angular-growl',
     'growlNotifications',
     'angular-loading-bar',
     'angular-progress-button-styles',
