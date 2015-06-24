@@ -98,11 +98,11 @@
         </div>
         <button class="btn btn-block btn-default" type="submit">{{'add' | translate}}</button>
         <growl-notifications>
-          <growl-notification ng-if="showBodyGrowlSuccess" class="growl-info fading" ttl="3000">
+          <growl-notification ng-if="showGrowlSuccess" class="growl-info fading" ttl="3000">
             <a href="javascript:;" ng-click="$growlNotification.remove()" class="close"><i class="fa fa-times"></i></a>
             {{ 'Saved' | translate }}
           </growl-notification>
-          <growl-notification ng-if="showBodyGrowlError" class="growl-error fading" ttl="3000">
+          <growl-notification ng-if="showGrowlError" class="growl-error fading" ttl="3000">
             <a href="javascript:;" ng-click="$growlNotification.remove()" class="close"><i class="fa fa-times"></i></a>
             {{ 'An error occured' | translate }}
           </growl-notification>
