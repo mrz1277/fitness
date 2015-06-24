@@ -27,11 +27,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static('.tmp'));
-app.use(express.static('app'));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('dist'));
+} else {
+  app.use(express.static('.tmp'));
+  app.use(express.static('app'));
+}
 app.use('/bower_components', express.static('bower_components'));
 app.use('/api', require('./server/routes/index'));
-app.use(serveIndex('app'));
+//app.use(serveIndex('dist'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
