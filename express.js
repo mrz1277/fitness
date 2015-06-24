@@ -1,11 +1,9 @@
 var express = require('express');
 var path = require('path');
-var serveIndex = require('serve-index');
+//var serveIndex = require('serve-index');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var liveLoad = require('connect-livereload');
-var logger = require('morgan');
 
 /**
  * API keys and Passport configuration.
@@ -22,8 +20,10 @@ mongoose.connection.on('error', function() {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
 });
 
-app.use(liveLoad({port: 35729}));
-app.use(logger('dev'));
+if (app.get('env') === 'development') {
+  app.use(require('connect-livereload')({port: 35729}));
+  app.use(require('morgan')('dev'));
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

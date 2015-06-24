@@ -159,6 +159,7 @@ gulp.task('build', ['clean'], function() {
 });
 
 gulp.task('deploy', ['build'], function() {
+  require('newrelic');
   gulp.start('connect');
 });
 
