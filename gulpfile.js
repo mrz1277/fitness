@@ -158,11 +158,6 @@ gulp.task('build', ['clean'], function() {
   gulp.start('builddist');
 });
 
-gulp.task('deploy', ['build'], function() {
-  require('newrelic');
-  gulp.start('connect');
-});
-
 gulp.task('docs', [], function() {
   return gulp.src('app/scripts/**/**')
     .pipe($.ngdocs.process())
